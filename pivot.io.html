@@ -133,11 +133,18 @@
                         <li class="mb-2">
                             <a href="#" class="nav-link flex items-center p-3 rounded-lg hover:bg-[var(--bg-nav-hover)]" onclick="showView(event, 'tasks-view')"><svg class="h-6 w-6 mr-3 flex-shrink-0" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M3.75 12h16.5m-16.5 3.75h16.5M3.75 19.5h16.5M5.625 4.5h12.75a1.875 1.875 0 010 3.75H5.625a1.875 1.875 0 010-3.75z" /></svg><span class="nav-text">Tasks</span></a>
                         </li>
+                        <!-- NEW -->
+                        <li class="mb-2">
+                            <a href="#" class="nav-link flex items-center p-3 rounded-lg hover:bg-[var(--bg-nav-hover)]" onclick="showView(event, 'projects-view')"><svg class="h-6 w-6 mr-3 flex-shrink-0" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M2.25 12.75V12A2.25 2.25 0 014.5 9.75h15A2.25 2.25 0 0121.75 12v.75m-8.69-6.44l-2.12-2.12a1.5 1.5 0 00-1.061-.44H4.5A2.25 2.25 0 002.25 6v12a2.25 2.25 0 002.25 2.25h15A2.25 2.25 0 0021.75 18V9a2.25 2.25 0 00-2.25-2.25h-5.379a1.5 1.5 0 01-1.06-.44z" /></svg><span class="nav-text">Projects</span></a>
+                        </li>
                         <li class="mb-2">
                             <a href="#" class="nav-link flex items-center p-3 rounded-lg hover:bg-[var(--bg-nav-hover)]" onclick="showView(event, 'timesheet-view')"><svg class="h-6 w-6 mr-3 flex-shrink-0" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z" /></svg><span class="nav-text">Timesheet</span></a>
                         </li>
-                        <li class="mb-2">
-                            <a href="#" class="nav-link flex items-center p-3 rounded-lg hover:bg-[var(--bg-nav-hover)]"><svg class="h-6 w-6 mr-3 flex-shrink-0" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M2.25 12.75V12A2.25 2.25 0 014.5 9.75h15A2.25 2.25 0 0121.75 12v.75m-8.69-6.44l-2.12-2.12a1.5 1.5 0 00-1.061-.44H4.5A2.25 2.25 0 002.25 6v12a2.25 2.25 0 002.25 2.25h15A2.25 2.25 0 0021.75 18V9a2.25 2.25 0 00-2.25-2.25h-5.379a1.5 1.5 0 01-1.06-.44z" /></svg><span class="nav-text">Projects</span></a>
+                         <li id="user-management-nav" class="mb-2 hidden">
+                            <a href="#" class="nav-link flex items-center p-3 rounded-lg hover:bg-[var(--bg-nav-hover)]" onclick="showView(event, 'users-view')">
+                                <svg class="h-6 w-6 mr-3 flex-shrink-0" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M18 18.72a9.094 9.094 0 003.741-.479 3 3 0 00-4.682-2.72m-7.289 2.72a3 3 0 01-4.682-2.72 9.094 9.094 0 013.741-.479m7.289 2.72a8.97 8.97 0 01-7.289 2.72m0 0a8.97 8.97 0 01-7.289-2.72m7.289 2.72v.007A2.997 2.997 0 0118 15.75m-7.289 2.72a2.997 2.997 0 00-2.72-2.72m0 0A2.997 2.997 0 009 15.75v.007m4.94-4.94a2.997 2.997 0 01-4.94 0m0 0a2.997 2.997 0 01-4.94 0m4.94 0a2.997 2.997 0 010 4.94m-4.94-4.94a2.997 2.997 0 010 4.94" /></svg>
+                                <span class="nav-text">Users</span>
+                            </a>
                         </li>
                     </ul>
                 </div>
@@ -184,6 +191,8 @@
                     <div id="ticket-detail-view" class="main-view hidden"></div>
                     <div id="tasks-view" class="main-view hidden"></div>
                     <div id="timesheet-view" class="main-view hidden"></div>
+                    <div id="users-view" class="main-view hidden"></div>
+                    <div id="projects-view" class="main-view hidden"></div>
 
                     <footer class="text-center py-8 text-[var(--text-muted)] text-sm">© 2024 Pivot.com. All rights reserved.</footer>
                 </div>
@@ -193,20 +202,28 @@
     <div id="modals-container"></div>
     
     <script>
+    (function() { // Start of IIFE to manage scope
         // --- DATA ---
-        const userData = {
-            'jane.doe@pivot.com': { id: 'JD', name: 'Jane Doe', avatar: 'https://placehold.co/40x40/fecaca/991b1b?text=JD', password: 'password123' },
-            'john.appleseed@pivot.com': { id: 'JA', name: 'John Appleseed', avatar: 'https://placehold.co/40x40/c7d2fe/3730a3?text=JA', password: 'password123' }
+        let userData = {
+            'jane.doe@pivot.com': { id: 'JD', name: 'Jane Doe', avatar: 'https://placehold.co/40x40/fecaca/991b1b?text=JD', password: 'password123', role: 'Admin' },
+            'john.appleseed@pivot.com': { id: 'JA', name: 'John Appleseed', avatar: 'https://placehold.co/40x40/c7d2fe/3730a3?text=JA', password: 'password123', role: 'Member' },
+            'maria.garcia@pivot.com': { id: 'MG', name: 'Maria Garcia', avatar: 'https://placehold.co/40x40/d1fae5/10b981?text=MA', password: 'password123', role: 'Member' },
+            'lee.smith@pivot.com': { id: 'LS', name: 'Lee Smith', avatar: 'https://placehold.co/40x40/E2E8F0/475569?text=LS', password: 'password123', role: 'Member' }
+        };
+        const projectData = {
+            'PROJ-1': { name: 'Q3 Marketing Campaign', description: 'All tasks related to the upcoming Q3 marketing push.', color: 'bg-blue-200' },
+            'PROJ-2': { name: 'New Mobile App', description: 'Development of the new iOS and Android mobile applications.', color: 'bg-green-200' },
+            'PROJ-3': { name: 'Website Redesign', description: 'A complete overhaul of the main company website.', color: 'bg-purple-200' },
         };
         const taskData = {
-            'TKT-001': { title: 'Design the new dashboard interface', description: 'Create a modern and intuitive dashboard design...', priority: 'High', status: 'In Progress', dueDate: '2024-07-30', endDate: 'Not set', timeEstimate: '8 hours', assignees: [{ n: 'JD' }, { n: 'JA' }], subtasks: ['TKT-007', 'TKT-008'], lastActivity: '2025-06-30T10:00:00Z' },
-            'TKT-002': { title: 'Finalize Q3 marketing budget', description: 'Review and finalize the marketing budget...', priority: 'High', status: 'To Do', dueDate: '2024-08-05', endDate: 'Not set', timeEstimate: '4 hours', assignees: [{ n: 'JA' }], lastActivity: '2025-06-29T11:00:00Z' },
-            'TKT-003': { title: 'Draft onboarding documentation', description: 'Create comprehensive documentation for new hires...', priority: 'Medium', status: 'To Do', dueDate: '2024-08-15', endDate: 'Not set', timeEstimate: '12 hours', assignees: [{ n: 'JD' }], lastActivity: '2025-06-28T12:00:00Z' },
-            'TKT-004': { title: 'Review new user feedback', description: 'Go through the latest user feedback...', priority: 'Low', status: 'To Do', dueDate: '2024-07-25', endDate: 'Not set', timeEstimate: '3 hours', assignees: [{ n: 'MG' }], lastActivity: '2025-06-27T13:00:00Z' },
-            'TKT-005': { title: 'Develop API for user authentication', description: 'Build the API endpoints for user registration...', priority: 'Medium', status: 'In Progress', dueDate: '2024-09-01', endDate: 'Not set', timeEstimate: '24 hours', assignees: [{ n: 'LS' }], lastActivity: '2025-06-26T14:00:00Z' },
-            'TKT-006': { title: 'Setup production environment', description: 'Configure the servers and databases...', priority: 'High', status: 'Done', dueDate: '2024-07-01', endDate: 'July 5, 2024', timeEstimate: '16 hours', assignees: [{ n: 'JA' }], lastActivity: '2025-06-25T15:00:00Z' },
-            'TKT-007': { title: 'Create wireframes for mobile view', description: 'This is a subtask...', priority: 'High', status: 'In Progress', dueDate: '2024-07-15', endDate: 'Not set', timeEstimate: '4 hours', assignees: [{ n: 'LS' }], parent: 'TKT-001', lastActivity: '2025-06-24T16:00:00Z' },
-            'TKT-008': { title: 'Develop component library', description: 'This is a subtask...', priority: 'Medium', status: 'To Do', dueDate: '2024-07-20', endDate: 'Not set', timeEstimate: '16 hours', assignees: [{ n: 'MG' }], parent: 'TKT-001', lastActivity: '2025-06-23T17:00:00Z' }
+            'TKT-001': { title: 'Design the new dashboard interface', description: 'Create a modern and intuitive dashboard design...', priority: 'High', status: 'In Progress', dueDate: '2024-07-30', endDate: 'Not set', timeEstimate: '8 hours', assignees: [{ n: 'JD' }, { n: 'JA' }], subtasks: ['TKT-007', 'TKT-008'], lastActivity: '2025-06-30T10:00:00Z', attachments: [], projectId: 'PROJ-3' },
+            'TKT-002': { title: 'Finalize Q3 marketing budget', description: 'Review and finalize the marketing budget...', priority: 'High', status: 'To Do', dueDate: '2024-08-05', endDate: 'Not set', timeEstimate: '4 hours', assignees: [{ n: 'JA' }], lastActivity: '2025-06-29T11:00:00Z', attachments: [], projectId: 'PROJ-1' },
+            'TKT-003': { title: 'Draft onboarding documentation', description: 'Create comprehensive documentation for new hires...', priority: 'Medium', status: 'To Do', dueDate: '2024-08-15', endDate: 'Not set', timeEstimate: '12 hours', assignees: [{ n: 'JD' }], lastActivity: '2025-06-28T12:00:00Z', attachments: [], projectId: 'PROJ-3' },
+            'TKT-004': { title: 'Review new user feedback', description: 'Go through the latest user feedback...', priority: 'Low', status: 'To Do', dueDate: '2024-07-25', endDate: 'Not set', timeEstimate: '3 hours', assignees: [{ n: 'MG' }], lastActivity: '2025-06-27T13:00:00Z', attachments: [], projectId: 'PROJ-2' },
+            'TKT-005': { title: 'Develop API for user authentication', description: 'Build the API endpoints for user registration...', priority: 'Medium', status: 'In Progress', dueDate: '2024-09-01', endDate: 'Not set', timeEstimate: '24 hours', assignees: [{ n: 'LS' }], lastActivity: '2025-06-26T14:00:00Z', attachments: [], projectId: 'PROJ-2' },
+            'TKT-006': { title: 'Setup production environment', description: 'Configure the servers and databases...', priority: 'High', status: 'Done', dueDate: '2024-07-01', endDate: 'July 5, 2024', timeEstimate: '16 hours', assignees: [{ n: 'JA' }], lastActivity: '2025-06-25T15:00:00Z', attachments: [], projectId: 'PROJ-3' },
+            'TKT-007': { title: 'Create wireframes for mobile view', description: 'This is a subtask...', priority: 'High', status: 'In Progress', dueDate: '2024-07-15', endDate: 'Not set', timeEstimate: '4 hours', assignees: [{ n: 'LS' }], parent: 'TKT-001', lastActivity: '2025-06-24T16:00:00Z', attachments: [], projectId: 'PROJ-2' },
+            'TKT-008': { title: 'Develop component library', description: 'This is a subtask...', priority: 'Medium', status: 'To Do', dueDate: '2024-07-20', endDate: 'Not set', timeEstimate: '16 hours', assignees: [{ n: 'MG' }], parent: 'TKT-001', lastActivity: '2025-06-23T17:00:00Z', attachments: [], projectId: 'PROJ-3' }
         };
         const assigneeDetails = { 'JD': { name: 'Jane Doe', avatar: 'https://placehold.co/40x40/fecaca/991b1b?text=JD' }, 'JA': { name: 'John Appleseed', avatar: 'https://placehold.co/40x40/c7d2fe/3730a3?text=JA' }, 'MG': { name: 'Maria Garcia', avatar: 'https://placehold.co/40x40/d1fae5/10b981?text=MA' }, 'LS': { name: 'Lee Smith', avatar: 'https://placehold.co/40x40/E2E8F0/475569?text=LS' } };
         let timesheetData = { '2025-06-30': [ { id: 1, ticketId: 'TKT-001', hours: 4.5 }, { id: 2, ticketId: 'TKT-005', hours: 3.5 } ], '2025-07-01': [ { id: 3, ticketId: 'TKT-001', hours: 8 } ] };
@@ -217,6 +234,7 @@
         let currentWeekStart = getStartOfWeek(new Date());
         let charts = {};
         let dashboardFilter = 'week';
+        let currentProjectFilter = null; // NEW
 
         // --- NEW & UPDATED LOGIC FOR TASK CREATION AND DASHBOARD---
         function setDashboardFilter(filter, element) {
@@ -326,11 +344,14 @@
             const modalsContainer = document.getElementById('modals-container');
             if (!modalsContainer) return;
             const assigneeOptions = Object.entries(assigneeDetails).map(([id, user]) => `<option value="${id}">${user.name}</option>`).join('');
+            const projectOptions = Object.entries(projectData).map(([id, proj]) => `<option value="${id}">${proj.name}</option>`).join(''); // NEW
+            
             modalsContainer.innerHTML = `
                 <div id="create-task-modal" class="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center">
                     <div class="bg-[var(--bg-primary)] rounded-lg shadow-xl w-full max-w-lg max-h-[90vh] flex flex-col">
                         <div class="flex justify-between items-center p-6 border-b border-[var(--border-primary)]"><h2 class="text-2xl font-bold text-[var(--text-primary)]">Create New Task</h2><button onclick="closeCreateTaskModal()" class="text-[var(--text-muted)] hover:text-[var(--text-primary)] text-3xl">&times;</button></div>
                         <form id="create-task-form" class="flex-1 p-6 space-y-4 overflow-y-auto">
+                            <div><label for="task-project" class="block text-sm font-medium text-[var(--text-secondary)]">Project</label><select id="task-project" name="project" class="mt-1 block w-full rounded-md border-[var(--border-primary)] shadow-sm bg-[var(--bg-secondary)] p-2">${projectOptions}</select></div>
                             <div><label for="task-title" class="block text-sm font-medium text-[var(--text-secondary)]">Title</label><input type="text" id="task-title" name="title" required class="mt-1 block w-full rounded-md border-[var(--border-primary)] shadow-sm bg-[var(--bg-secondary)] p-2"></div>
                             <div><label for="task-description" class="block text-sm font-medium text-[var(--text-secondary)]">Description</label><textarea id="task-description" name="description" rows="4" class="mt-1 block w-full rounded-md border-[var(--border-primary)] shadow-sm bg-[var(--bg-secondary)] p-2"></textarea></div>
                             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -344,7 +365,7 @@
                 </div>`;
         }
         function closeCreateTaskModal() { const modal = document.getElementById('create-task-modal'); if (modal) modal.remove(); }
-        function handleCreateTask() { const form = document.getElementById('create-task-form'); const newId = 'TKT-' + String(Object.keys(taskData).length + 1).padStart(3, '0'); taskData[newId] = { title: form.title.value, description: form.description.value, priority: form.priority.value, status: 'To Do', dueDate: form.dueDate.value, endDate: 'Not set', timeEstimate: '0 hours', assignees: [{ n: form.assignee.value }], subtasks: [], lastActivity: new Date().toISOString() }; closeCreateTaskModal(); renderTasks(); }
+        function handleCreateTask() { const form = document.getElementById('create-task-form'); const newId = 'TKT-' + String(Object.keys(taskData).length + 1).padStart(3, '0'); taskData[newId] = { title: form.title.value, description: form.description.value, priority: form.priority.value, status: 'To Do', dueDate: form.dueDate.value, endDate: 'Not set', timeEstimate: '0 hours', assignees: [{ n: form.assignee.value }], subtasks: [], lastActivity: new Date().toISOString(), projectId: form.project.value }; closeCreateTaskModal(); renderTasks(); }
         
         // --- ALL OTHER FUNCTIONS ---
         const userMenuButton = document.getElementById('user-menu-button');
@@ -384,21 +405,21 @@
         function closeSettingsModal() { const modal = document.getElementById('settings-modal'); if(modal) modal.remove(); }
         function switchSettingsTab(event, tabName) { event.preventDefault(); document.querySelectorAll('.settings-tab-content').forEach(el => el.classList.add('hidden')); document.querySelectorAll('.settings-tab').forEach(el => el.classList.remove('active')); document.getElementById(`${tabName}-tab-content`).classList.remove('hidden'); event.currentTarget.classList.add('active'); }
         function getStartOfWeek(date) { const d = new Date(date); const day = d.getDay(); const diff = d.getDate() - day + (day === 0 ? -6 : 1); return new Date(d.setDate(diff));}
-        function showView(event, viewId) { if (event) event.preventDefault(); document.querySelectorAll('.main-view').forEach(view => view.classList.add('hidden')); const targetView = document.getElementById(viewId); if (targetView) targetView.classList.remove('hidden'); if (viewId === 'dashboard-view') { renderDashboard(); } else if (viewId === 'tasks-view') { if(targetView.innerHTML.trim() === '') createTasksViewDOM(); renderTasks(); setTaskViewMode(currentTaskViewMode); } else if (viewId === 'timesheet-view') { if(targetView.innerHTML.trim() === '') createTimesheetViewDOM(); renderTimesheet(); } else if (viewId === 'ticket-detail-view' && targetView.innerHTML.trim() === '') { openTaskFromList('TKT-001'); } if (event) { document.querySelectorAll('#nav-links .nav-link').forEach(link => link.classList.remove('active')); event.currentTarget.classList.add('active'); } }
+        function showView(event, viewId) { if (event) event.preventDefault(); document.querySelectorAll('.main-view').forEach(view => view.classList.add('hidden')); const targetView = document.getElementById(viewId); if (targetView) targetView.classList.remove('hidden'); if (viewId === 'dashboard-view') { renderDashboard(); } else if (viewId === 'tasks-view') { if(targetView.innerHTML.trim() === '') createTasksViewDOM(); renderTasks(); setTaskViewMode(currentTaskViewMode); } else if (viewId === 'timesheet-view') { if(targetView.innerHTML.trim() === '') createTimesheetViewDOM(); renderTimesheet(); } else if (viewId === 'users-view') { renderUserManagement(); } else if (viewId === 'projects-view') { renderProjectsPage(); } else if (viewId === 'ticket-detail-view' && targetView.innerHTML.trim() === '') { openTaskFromList('TKT-001'); } if (event) { document.querySelectorAll('#nav-links .nav-link').forEach(link => link.classList.remove('active')); event.currentTarget.classList.add('active'); } }
         function openTaskFromList(taskId) { document.getElementById('ticket-detail-view').innerHTML = createTaskDetailHTML(taskId); showView(null, 'ticket-detail-view'); }
         function changeWeek(direction) { currentWeekStart.setDate(currentWeekStart.getDate() + 7 * direction); document.getElementById('week-picker').valueAsDate = currentWeekStart; renderTimesheet(); }
         function addTimesheetEntry(dateString) { if (!timesheetData[dateString]) { timesheetData[dateString] = []; } const newId = Date.now(); timesheetData[dateString].push({ id: newId, ticketId: '', hours: 0 }); renderTimesheet(); }
         function removeTimesheetEntry(dateString, entryId) { timesheetData[dateString] = timesheetData[dateString].filter(entry => entry.id !== entryId); renderTimesheet(); }
         function updateTimesheetEntry(dateString, entryId, field, value) { const entry = timesheetData[dateString].find(e => e.id === entryId); if (entry) { entry[field] = value; } renderTimesheet(); }
-        function createTaskDetailHTML(taskId) { const task = taskData[taskId]; if (!task) return `<div class="bg-[var(--bg-primary)] rounded-2xl shadow-lg border border-[var(--border-primary)] p-8"><p class="text-[var(--text-primary)]">Task not found.</p></div>`; const assigneesHTML = task.assignees.map(a => { const d = assigneeDetails[a.n]; return `<div class="flex items-center gap-3"><img src="${d.avatar}" alt="${d.name}" class="w-10 h-10 rounded-full"><span class="font-medium text-[var(--text-secondary)]">${d.name}</span></div>`; }).join(''); const priorityButton = (p, taskP) => { const c = { Low: 'bg-yellow-100 text-yellow-800', Medium: 'bg-orange-100 text-orange-800', High: 'bg-red-100 text-red-800' }; return `<button class="px-3 py-1 text-sm rounded-full ${c[p]} ${p === taskP ? 'ring-2 ring-indigo-500' : ''}">${p}</button>`; }; const parentLinkHTML = task.parent ? `<div onclick="openTaskFromList('${task.parent}')" class="flex items-center gap-1 text-sm text-[var(--text-muted)] hover:text-indigo-600 cursor-pointer"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg><span>Back to Parent Task</span></div>` : ''; const subtasksHTML = (task.subtasks && task.subtasks.length > 0) ? `<div class="mb-8"><h2 class="text-lg font-semibold text-[var(--text-primary)] mb-4">Subtasks (${task.subtasks.length})</h2><div class="space-y-3">${task.subtasks.map(subId => { const sub = taskData[subId]; const assignee = assigneeDetails[sub.assignees[0].n]; return `<div class="flex items-center justify-between p-3 bg-[var(--bg-secondary)] rounded-lg border border-[var(--border-primary)] hover:border-indigo-400"><div class="flex items-center gap-3"><input type="checkbox" class="h-5 w-5 rounded border-slate-300 text-indigo-600 focus:ring-indigo-500 bg-[var(--bg-primary)]"><a href="#" class="font-medium text-[var(--text-secondary)] hover:text-indigo-600" onclick="event.preventDefault(); openTaskFromList('${subId}');">${sub.title}</a></div><div class="flex items-center gap-3"><img src="${assignee.avatar.replace('40x40', '24x24')}" alt="${assignee.name}" class="w-7 h-7 rounded-full border-2 border-[var(--bg-primary)]"><span class="text-sm text-[var(--text-muted)]">${new Date(sub.dueDate).toLocaleDateString(undefined, {month:'short', day:'numeric'})}</span></div></div>`; }).join('')}</div></div>` : ''; return `<div class="bg-[var(--bg-primary)] rounded-2xl shadow-lg border border-[var(--border-primary)]"><div class="p-6 border-b border-[var(--border-primary)]"><div class="flex flex-wrap items-start justify-between gap-4"><div><div class="flex items-center gap-3"><span class="bg-indigo-100 text-indigo-600 text-sm font-semibold px-3 py-1 rounded-full">${taskId}</span>${parentLinkHTML}</div><h1 class="text-3xl font-bold mt-2 text-[var(--text-primary)]">${task.title}</h1></div><div class="flex items-center gap-2"><button class="px-4 py-2 bg-[var(--bg-secondary)] hover:bg-[var(--bg-tertiary)] rounded-lg text-sm font-medium text-[var(--text-secondary)]">Share</button><button class="px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg text-sm font-medium">Complete Task</button></div></div></div><div class="flex flex-col lg:flex-row"><div class="w-full lg:w-2/3 p-6"><div class="mb-8"><h2 class="text-lg font-semibold text-[var(--text-primary)] mb-3">Description</h2><p class="text-[var(--text-secondary)] leading-relaxed">${task.description}</p></div>${subtasksHTML}</div><div class="w-full lg:w-1/3 p-6 border-t lg:border-t-0 lg:border-l border-[var(--border-primary)]"><div class="space-y-6"><div><h3 class="text-sm font-semibold text-[var(--text-muted)] uppercase tracking-wider">Assignees</h3><div class="mt-3 space-y-3">${assigneesHTML}</div></div><div><h3 class="text-sm font-semibold text-[var(--text-muted)] uppercase tracking-wider">Priority</h3><div class="mt-3 flex space-x-2">${priorityButton('Low', task.priority)}${priorityButton('Medium', task.priority)}${priorityButton('High', task.priority)}</div></div><div><h3 class="text-sm font-semibold text-[var(--text-muted)] uppercase tracking-wider">Dates</h3><div class="mt-3 space-y-2"><div class="flex justify-between items-center"><span class="text-[var(--text-secondary)]">Due Date</span><span class="font-medium text-[var(--text-primary)]">${new Date(task.dueDate).toLocaleDateString()}</span></div><div class="flex justify-between items-center"><span class="text-[var(--text-secondary)]">End Date</span><span class="font-medium text-[var(--text-muted)]">${task.endDate}</span></div></div></div><div><h3 class="text-sm font-semibold text-[var(--text-muted)] uppercase tracking-wider">Time Estimate</h3><div class="mt-3"><span class="font-medium text-[var(--text-primary)]">${task.timeEstimate}</span></div></div></div></div></div></div>`; }
-        function renderTasks() { const gridContainer = document.getElementById('tasks-grid-container'), listContainer = document.getElementById('tasks-list-container'); if(gridContainer) gridContainer.innerHTML = ''; if(listContainer) listContainer.innerHTML = ''; const columns = { 'To Do': [], 'In Progress': [], 'Done': [] }; const taskIds = Object.keys(taskData).filter(id => !taskData[id].parent); const sortedTaskIds = taskIds.sort((a, b) => { const taskA = taskData[a], taskB = taskData[b]; let valA = taskA[currentSort.column], valB = taskB[currentSort.column]; let comp = 0; if (valA > valB) comp = 1; else if (valA < valB) comp = -1; return currentSort.direction === 'desc' ? comp * -1 : comp; }); const getSortIcon = (col) => `<svg class="sort-icon inline-block ml-1 h-4 w-4 ${currentSort.column === col ? 'active' : ''}" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>`; let tableHTML = `<table class="w-full text-left"><thead class="border-b border-[var(--border-primary)]"><tr><th class="p-4 font-semibold text-sm text-[var(--text-muted)] cursor-pointer" onclick="sortTable('title')">Task ${getSortIcon('title')}</th><th class="p-4 font-semibold text-sm text-[var(--text-muted)] cursor-pointer" onclick="sortTable('status')">Status ${getSortIcon('status')}</th><th class="p-4 font-semibold text-sm text-[var(--text-muted)] cursor-pointer" onclick="sortTable('dueDate')">Due Date ${getSortIcon('dueDate')}</th><th class="p-4 font-semibold text-sm text-[var(--text-muted)]">Assignees</th></tr></thead><tbody>`; sortedTaskIds.forEach(taskId => { const task = taskData[taskId]; columns[task.status].push(taskId); const assigneesList = task.assignees.map(a => `<img src="${assigneeDetails[a.n].avatar.replace('40x40','24x24')}" alt="${assigneeDetails[a.n].name}" title="${assigneeDetails[a.n].name}" class="inline-block h-7 w-7 rounded-full ring-2 ring-[var(--bg-primary)]">`).join(''); tableHTML += `<tr class="border-b border-[var(--border-primary)] hover:bg-[var(--bg-secondary)] cursor-pointer" onclick="openTaskFromList('${taskId}')"><td class="p-4 font-medium text-[var(--text-primary)]">${task.title}</td><td class="p-4 text-sm text-[var(--text-secondary)]">${task.status}</td><td class="p-4 text-sm text-[var(--text-secondary)]">${new Date(task.dueDate).toLocaleDateString()}</td><td class="p-4"><div class="flex -space-x-2 overflow-hidden">${assigneesList}</div></td></tr>`; }); tableHTML += '</tbody></table>'; if(listContainer) listContainer.innerHTML = tableHTML; let gridHTML = ''; for (const status in columns) { const taskCards = columns[status].map(taskId => { const task = taskData[taskId]; const assigneesGrid = task.assignees.map(a => `<img src="${assigneeDetails[a.n].avatar.replace('40x40','24x24')}" alt="${assigneeDetails[a.n].name}" title="${assigneeDetails[a.n].name}" class="inline-block h-6 w-6 rounded-full ring-2 ring-[var(--bg-primary)]">`).join(''); return `<div onclick="openTaskFromList('${taskId}')" class="p-4 bg-[var(--bg-secondary)] rounded-lg border border-[var(--border-primary)] cursor-pointer hover:border-indigo-400"><p class="font-medium text-[var(--text-primary)] ${task.status === 'Done' ? 'line-through text-[var(--text-muted)]' : ''}">${task.title}</p><div class="flex items-center justify-between mt-3"><span class="text-xs font-semibold px-2 py-0.5 rounded-full ${task.priority === 'High' ? 'bg-red-100 text-red-700' : task.priority === 'Medium' ? 'bg-orange-100 text-orange-700' : 'bg-yellow-100 text-yellow-700'}">${task.priority}</span><div class="flex -space-x-2 overflow-hidden">${assigneesGrid}</div></div></div>`; }).join(''); gridHTML += `<div class="bg-[var(--bg-primary)] rounded-lg shadow-sm border border-[var(--border-primary)]"><h2 class="text-lg font-semibold p-4 border-b border-[var(--border-primary)] text-[var(--text-primary)]">${status} <span class="text-sm font-normal text-[var(--text-muted)]">${columns[status].length}</span></h2><div class="p-4 space-y-4">${taskCards}</div></div>`; } if(gridContainer) gridContainer.innerHTML = gridHTML; }
+        function createTaskDetailHTML(taskId) { const task = taskData[taskId]; if (!task) return `<div class="bg-[var(--bg-primary)] rounded-2xl shadow-lg border border-[var(--border-primary)] p-8"><p class="text-[var(--text-primary)]">Task not found.</p></div>`; const assigneesHTML = task.assignees.map(a => { const d = assigneeDetails[a.n]; return `<div class="flex items-center gap-3"><img src="${d.avatar}" alt="${d.name}" class="w-10 h-10 rounded-full"><span class="font-medium text-[var(--text-secondary)]">${d.name}</span></div>`; }).join(''); const priorityButton = (p, taskP) => { const c = { Low: 'bg-yellow-100 text-yellow-800', Medium: 'bg-orange-100 text-orange-800', High: 'bg-red-100 text-red-800' }; return `<button class="px-3 py-1 text-sm rounded-full ${c[p]} ${p === taskP ? 'ring-2 ring-indigo-500' : ''}">${p}</button>`; }; const parentLinkHTML = task.parent ? `<div onclick="openTaskFromList('${task.parent}')" class="flex items-center gap-1 text-sm text-[var(--text-muted)] hover:text-indigo-600 cursor-pointer"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg><span>Back to Parent Task</span></div>` : ''; const subtasksHTML = (task.subtasks && task.subtasks.length > 0) ? `<div class="mb-8"><h2 class="text-lg font-semibold text-[var(--text-primary)] mb-4">Subtasks (${task.subtasks.length})</h2><div class="space-y-3">${task.subtasks.map(subId => { const sub = taskData[subId]; const assignee = assigneeDetails[sub.assignees[0].n]; return `<div class="flex items-center justify-between p-3 bg-[var(--bg-secondary)] rounded-lg border border-[var(--border-primary)] hover:border-indigo-400"><div class="flex items-center gap-3"><input type="checkbox" class="h-5 w-5 rounded border-slate-300 text-indigo-600 focus:ring-indigo-500 bg-[var(--bg-primary)]"><a href="#" class="font-medium text-[var(--text-secondary)] hover:text-indigo-600" onclick="event.preventDefault(); openTaskFromList('${subId}');">${sub.title}</a></div><div class="flex items-center gap-3"><img src="${assignee.avatar.replace('40x40', '24x24')}" alt="${assignee.name}" class="w-7 h-7 rounded-full border-2 border-[var(--bg-primary)]"><span class="text-sm text-[var(--text-muted)]">${new Date(sub.dueDate).toLocaleDateString(undefined, {month:'short', day:'numeric'})}</span></div></div>`; }).join('')}</div></div>` : ''; const attachmentsHTML = `<div class="mt-8"><h3 class="text-lg font-semibold mb-3 text-[var(--text-primary)]">Attachments</h3><div id="attachments-list" class="space-y-3 mb-4">${task.attachments.map(file => `<div class="flex items-center p-3 bg-[var(--bg-secondary)] rounded-lg border border-[var(--border-primary)]"><svg class="w-6 h-6 mr-3 text-slate-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.172 7l-6.586 6.586a2 2 0 102.828 2.828l6.414-6.586a4 4 0 00-5.656-5.656l-6.415 6.585a6 6 0 108.486 8.486L20.5 13"></path></svg><span class="font-medium text-slate-700">${file.name}</span></div>`).join('')}</div><input type="file" id="file-input-${taskId}" class="hidden" onchange="handleFileChange(event, '${taskId}')"><button onclick="document.getElementById('file-input-${taskId}').click()" class="text-indigo-600 hover:text-indigo-800 font-medium text-sm flex items-center gap-2"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path></svg>Add Attachment</button></div>`; return `<div class="bg-[var(--bg-primary)] rounded-2xl shadow-lg border border-[var(--border-primary)]"><div class="p-6 border-b border-[var(--border-primary)]"><div class="flex flex-wrap items-start justify-between gap-4"><div><div class="flex items-center gap-3"><span class="bg-indigo-100 text-indigo-600 text-sm font-semibold px-3 py-1 rounded-full">${taskId}</span>${parentLinkHTML}</div><h1 class="text-3xl font-bold mt-2 text-[var(--text-primary)]">${task.title}</h1></div><div class="flex items-center gap-2"><button class="px-4 py-2 bg-[var(--bg-secondary)] hover:bg-[var(--bg-tertiary)] rounded-lg text-sm font-medium text-[var(--text-secondary)]">Share</button><button class="px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg text-sm font-medium">Complete Task</button></div></div></div><div class="flex flex-col lg:flex-row"><div class="w-full lg:w-2/3 p-6"><div class="mb-8"><h2 class="text-lg font-semibold text-[var(--text-primary)] mb-3">Description</h2><p class="text-[var(--text-secondary)] leading-relaxed">${task.description}</p></div>${subtasksHTML}${attachmentsHTML}</div><div class="w-full lg:w-1/3 p-6 border-t lg:border-t-0 lg:border-l border-[var(--border-primary)]"><div class="space-y-6"><div><h3 class="text-sm font-semibold text-[var(--text-muted)] uppercase tracking-wider">Assignees</h3><div class="mt-3 space-y-3">${assigneesHTML}</div></div><div><h3 class="text-sm font-semibold text-[var(--text-muted)] uppercase tracking-wider">Priority</h3><div class="mt-3 flex space-x-2">${priorityButton('Low', task.priority)}${priorityButton('Medium', task.priority)}${priorityButton('High', task.priority)}</div></div><div><h3 class="text-sm font-semibold text-[var(--text-muted)] uppercase tracking-wider">Dates</h3><div class="mt-3 space-y-2"><div class="flex justify-between items-center"><span class="text-[var(--text-secondary)]">Due Date</span><span class="font-medium text-[var(--text-primary)]">${new Date(task.dueDate).toLocaleDateString()}</span></div><div class="flex justify-between items-center"><span class="text-[var(--text-secondary)]">End Date</span><span class="font-medium text-[var(--text-muted)]">${task.endDate}</span></div></div></div><div><h3 class="text-sm font-semibold text-[var(--text-muted)] uppercase tracking-wider">Time Estimate</h3><div class="mt-3"><span class="font-medium text-[var(--text-primary)]">${task.timeEstimate}</span></div></div></div></div></div></div>`; }
+        function renderTasks() { const gridContainer = document.getElementById('tasks-grid-container'), listContainer = document.getElementById('tasks-list-container'); if(!gridContainer || !listContainer) return; gridContainer.innerHTML = ''; listContainer.innerHTML = ''; const columns = { 'To Do': [], 'In Progress': [], 'Done': [] }; let filteredTaskIds = Object.keys(taskData).filter(id => !taskData[id].parent); if (currentProjectFilter) { filteredTaskIds = filteredTaskIds.filter(id => taskData[id].projectId === currentProjectFilter); } const sortedTaskIds = filteredTaskIds.sort((a, b) => { const taskA = taskData[a], taskB = taskData[b]; let valA = taskA[currentSort.column], valB = taskB[currentSort.column]; let comp = 0; if (valA > valB) comp = 1; else if (valA < valB) comp = -1; return currentSort.direction === 'desc' ? comp * -1 : comp; }); const getSortIcon = (col) => `<svg class="sort-icon inline-block ml-1 h-4 w-4 ${currentSort.column === col ? 'active' : ''}" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>`; let tableHTML = `<table class="w-full text-left"><thead class="border-b border-[var(--border-primary)]"><tr><th class="p-4 font-semibold text-sm text-[var(--text-muted)] cursor-pointer" onclick="sortTable('title')">Task ${getSortIcon('title')}</th><th class="p-4 font-semibold text-sm text-[var(--text-muted)] cursor-pointer" onclick="sortTable('status')">Status ${getSortIcon('status')}</th><th class="p-4 font-semibold text-sm text-[var(--text-muted)] cursor-pointer" onclick="sortTable('dueDate')">Due Date ${getSortIcon('dueDate')}</th><th class="p-4 font-semibold text-sm text-[var(--text-muted)]">Assignees</th></tr></thead><tbody>`; sortedTaskIds.forEach(taskId => { const task = taskData[taskId]; columns[task.status].push(taskId); const assigneesList = task.assignees.map(a => `<img src="${assigneeDetails[a.n].avatar.replace('40x40','24x24')}" alt="${assigneeDetails[a.n].name}" title="${assigneeDetails[a.n].name}" class="inline-block h-7 w-7 rounded-full ring-2 ring-[var(--bg-primary)]">`).join(''); tableHTML += `<tr class="border-b border-[var(--border-primary)] hover:bg-[var(--bg-secondary)] cursor-pointer" onclick="openTaskFromList('${taskId}')"><td class="p-4 font-medium text-[var(--text-primary)]">${task.title}</td><td class="p-4 text-sm text-[var(--text-secondary)]">${task.status}</td><td class="p-4 text-sm text-[var(--text-secondary)]">${new Date(task.dueDate).toLocaleDateString()}</td><td class="p-4"><div class="flex -space-x-2 overflow-hidden">${assigneesList}</div></td></tr>`; }); tableHTML += '</tbody></table>'; if(listContainer) listContainer.innerHTML = tableHTML; let gridHTML = ''; for (const status in columns) { const taskCards = columns[status].map(taskId => { const task = taskData[taskId]; const assigneesGrid = task.assignees.map(a => `<img src="${assigneeDetails[a.n].avatar.replace('40x40','24x24')}" alt="${assigneeDetails[a.n].name}" title="${assigneeDetails[a.n].name}" class="inline-block h-6 w-6 rounded-full ring-2 ring-[var(--bg-primary)]">`).join(''); return `<div onclick="openTaskFromList('${taskId}')" class="p-4 bg-[var(--bg-secondary)] rounded-lg border border-[var(--border-primary)] cursor-pointer hover:border-indigo-400"><p class="font-medium text-[var(--text-primary)] ${task.status === 'Done' ? 'line-through text-[var(--text-muted)]' : ''}">${task.title}</p><div class="flex items-center justify-between mt-3"><span class="text-xs font-semibold px-2 py-0.5 rounded-full ${task.priority === 'High' ? 'bg-red-100 text-red-700' : task.priority === 'Medium' ? 'bg-orange-100 text-orange-700' : 'bg-yellow-100 text-yellow-700'}">${task.priority}</span><div class="flex -space-x-2 overflow-hidden">${assigneesGrid}</div></div></div>`; }).join(''); gridHTML += `<div class="bg-[var(--bg-primary)] rounded-lg shadow-sm border border-[var(--border-primary)]"><h2 class="text-lg font-semibold p-4 border-b border-[var(--border-primary)] text-[var(--text-primary)]">${status} <span class="text-sm font-normal text-[var(--text-muted)]">${columns[status].length}</span></h2><div class="p-4 space-y-4">${taskCards}</div></div>`; } if(gridContainer) gridContainer.innerHTML = gridHTML; }
         function renderTimesheet() { const container = document.getElementById('timesheet-container'); if(!container) return; let html = '<div class="space-y-6">'; const weekDates = []; let weeklyTotal = 0; for (let i = 0; i < 7; i++) { const day = new Date(currentWeekStart); day.setDate(day.getDate() + i); weekDates.push(day); } weekDates.forEach(date => { const dateString = date.toISOString().split('T')[0]; const entries = timesheetData[dateString] || []; let dailyTotal = entries.reduce((acc, entry) => acc + parseFloat(entry.hours || 0), 0); weeklyTotal += dailyTotal; html += `<div class="p-4 rounded-lg bg-[var(--bg-secondary)] border border-[var(--border-primary)]"><div class="flex justify-between items-center mb-4"><div><h3 class="font-bold text-lg text-[var(--text-primary)]">${date.toLocaleDateString(undefined, { weekday: 'long' })}</h3><p class="text-sm text-[var(--text-muted)]">${date.toLocaleDateString()}</p></div><div class="text-right"><p class="font-bold text-lg text-[var(--text-primary)]">${dailyTotal.toFixed(2)} hrs</p><p class="text-sm text-[var(--text-muted)]">Daily Total</p></div></div><div id="entries-${dateString}" class="space-y-2">${entries.map(entry => `<div class="grid grid-cols-12 gap-2 items-center"><select onchange="updateTimesheetEntry('${dateString}', ${entry.id}, 'ticketId', this.value)" class="col-span-8 p-2 border border-[var(--border-primary)] rounded-md bg-[var(--bg-primary)] text-[var(--text-secondary)]"><option value="">Select a task...</option>${Object.keys(taskData).map(id => `<option value="${id}" ${entry.ticketId === id ? 'selected' : ''}>${id}: ${taskData[id].title}</option>`).join('')}</select><input oninput="updateTimesheetEntry('${dateString}', ${entry.id}, 'hours', this.value)" type="number" step="0.25" value="${entry.hours}" class="col-span-3 p-2 border border-[var(--border-primary)] rounded-md bg-[var(--bg-primary)] text-[var(--text-secondary)]"><button onclick="removeTimesheetEntry('${dateString}', ${entry.id})" class="col-span-1 text-[var(--text-muted)] hover:text-red-500"><svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mx-auto" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" /></svg></button></div>`).join('')}</div><button onclick="addTimesheetEntry('${dateString}')" class="mt-4 text-indigo-600 hover:text-indigo-800 font-medium text-sm flex items-center gap-2"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>Add Entry</button></div>`; }); html += `<div class="mt-6 p-4 border-t-2 border-indigo-500 flex justify-end items-center gap-4"><p class="text-sm font-semibold text-[var(--text-muted)]">WEEKLY TOTAL</p><p class="text-2xl font-bold text-indigo-600">${weeklyTotal.toFixed(2)} hours</p></div><div class="flex justify-end mt-4"><button class="px-6 py-2 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg font-semibold">Submit Timesheet</button></div>`; html += '</div>'; container.innerHTML = html; }
         function sortTable(column) { if (currentSort.column === column) { currentSort.direction = currentSort.direction === 'asc' ? 'desc' : 'asc'; } else { currentSort.column = column; currentSort.direction = 'asc'; } renderTasks(); }
         function setTaskViewMode(mode) { currentTaskViewMode = mode; const gridC = document.getElementById('tasks-grid-container'), listC = document.getElementById('tasks-list-container'), gridB = document.getElementById('grid-view-btn'), listB = document.getElementById('list-view-btn'); if(!gridC || !listC || !gridB || !listB) return; if (mode === 'grid') { gridC.classList.remove('hidden'); listC.classList.add('hidden'); gridB.classList.add('active'); listB.classList.remove('active'); } else { gridC.classList.add('hidden'); listC.classList.remove('hidden'); gridB.classList.remove('active'); listB.classList.add('active'); } }
         function toggleNavbar() { const nav = document.getElementById('main-nav'), main = document.getElementById('main-content'); nav.classList.toggle('collapsed'); if (nav.classList.contains('collapsed')) { main.classList.remove('lg:ml-64'); main.classList.add('lg:ml-20'); } else { main.classList.remove('lg:ml-20'); main.classList.add('lg:ml-64'); } }
         function toggleTheme() { const html = document.documentElement; const newTheme = html.getAttribute('data-theme') === 'light' ? 'dark' : 'light'; html.setAttribute('data-theme', newTheme); localStorage.setItem('pivot-theme', newTheme); updateThemeIcons(newTheme); }
         function updateThemeIcons(theme) { const sunBtn = document.getElementById('theme-sun-btn'), moonBtn = document.getElementById('theme-moon-btn'); if(!sunBtn || !moonBtn) return; if (theme === 'dark') { sunBtn.classList.add('hidden'); moonBtn.classList.remove('hidden'); } else { sunBtn.classList.remove('hidden'); moonBtn.classList.add('hidden'); } }
-        function createTasksViewDOM() { const tasksViewDiv = document.getElementById('tasks-view'); if(tasksViewDiv) tasksViewDiv.innerHTML = `<div class="flex items-center justify-between mb-6"><h1 class="text-3xl font-bold text-[var(--text-primary)]">Tasks</h1><div class="flex items-center gap-4"><div class="flex items-center gap-2 p-1 bg-slate-200 rounded-lg"><button id="grid-view-btn" onclick="setTaskViewMode('grid')" class="view-switcher-btn p-2 rounded-md text-slate-600 hover:bg-slate-300"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg></button><button id="list-view-btn" onclick="setTaskViewMode('list')" class="view-switcher-btn p-2 rounded-md text-slate-600 hover:bg-slate-300"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="8" y1="6" x2="21" y2="6"></line><line x1="8" y1="12" x2="21" y2="12"></line><line x1="8" y1="18" x2="21" y2="18"></line><line x1="3" y1="6" x2="3.01" y2="6"></line><line x1="3" y1="12" x2="3.01" y2="12"></line><line x1="3" y1="18" x2="3.01" y2="18"></line></svg></button></div><button onclick="openCreateTaskModal()" class="p-2 rounded-lg bg-indigo-600 text-white hover:bg-indigo-700"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg></button></div></div><div id="tasks-grid-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"></div><div id="tasks-list-container" class="hidden bg-[var(--bg-primary)] rounded-lg shadow-sm border border-[var(--border-primary)] overflow-x-auto"></div>`; }
+        function createTasksViewDOM() { const tasksViewDiv = document.getElementById('tasks-view'); if(tasksViewDiv) tasksViewDiv.innerHTML = `<div class="flex items-center justify-between mb-6"><h1 class="text-3xl font-bold text-[var(--text-primary)]">Tasks</h1><div class="flex items-center gap-4"><button id="show-all-tasks-btn" class="hidden px-4 py-2 bg-slate-200 hover:bg-slate-300 rounded-lg text-sm font-medium" onclick="filterTasksByProject(null)">Show All</button><div class="flex items-center gap-2 p-1 bg-slate-200 rounded-lg"><button id="grid-view-btn" onclick="setTaskViewMode('grid')" class="view-switcher-btn p-2 rounded-md text-slate-600 hover:bg-slate-300"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg></button><button id="list-view-btn" onclick="setTaskViewMode('list')" class="view-switcher-btn p-2 rounded-md text-slate-600 hover:bg-slate-300"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="8" y1="6" x2="21" y2="6"></line><line x1="8" y1="12" x2="21" y2="12"></line><line x1="8" y1="18" x2="21" y2="18"></line><line x1="3" y1="6" x2="3.01" y2="6"></line><line x1="3" y1="12" x2="3.01" y2="12"></line><line x1="3" y1="18" x2="3.01" y2="18"></line></svg></button></div><button onclick="openCreateTaskModal()" class="p-2 rounded-lg bg-indigo-600 text-white hover:bg-indigo-700"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg></button></div></div><div id="tasks-grid-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"></div><div id="tasks-list-container" class="hidden bg-[var(--bg-primary)] rounded-lg shadow-sm border border-[var(--border-primary)] overflow-x-auto"></div>`; }
         function createTimesheetViewDOM() { const timesheetViewDiv = document.getElementById('timesheet-view'); if(timesheetViewDiv) { timesheetViewDiv.innerHTML = `<div class="flex flex-col md:flex-row items-center justify-between mb-6 gap-4"><h1 class="text-3xl font-bold text-[var(--text-primary)]">Timesheet</h1><div class="flex items-center gap-2"><button onclick="changeWeek(-1)" class="p-2 rounded-md hover:bg-[var(--bg-secondary)] text-[var(--text-muted)]">&lt; Prev</button><input type="date" id="week-picker" class="p-2 border border-[var(--border-primary)] rounded-md bg-[var(--bg-primary)] text-[var(--text-secondary)]"><button onclick="changeWeek(1)" class="p-2 rounded-md hover:bg-[var(--bg-secondary)] text-[var(--text-muted)]">Next &gt;</button></div></div><div id="timesheet-container" class="bg-[var(--bg-primary)] p-6 rounded-lg shadow-sm border border-[var(--border-primary)]"></div>`; const weekPicker = document.getElementById('week-picker'); if(weekPicker) { weekPicker.valueAsDate = currentWeekStart; weekPicker.addEventListener('change', () => { const selectedDate = weekPicker.valueAsDate; selectedDate.setHours(12); currentWeekStart = getStartOfWeek(selectedDate); renderTimesheet(); }); } } }
         
         function handleLogin(event) {
@@ -409,12 +430,15 @@
             const loginError = document.getElementById('login-error');
 
             if (user && user.password === password) {
-                const userToStore = { id: user.id, name: user.name, avatar: user.avatar, email: email };
+                const userToStore = { id: user.id, name: user.name, avatar: user.avatar, email: email, role: user.role };
                 sessionStorage.setItem('currentUser', JSON.stringify(userToStore));
                 document.getElementById('login-container').classList.add('hidden');
                 document.getElementById('app-container').classList.remove('hidden');
                 document.getElementById('user-name').textContent = user.name;
                 document.getElementById('user-avatar').src = user.avatar;
+                if(user.role === 'Admin') {
+                    document.getElementById('user-management-nav').classList.remove('hidden');
+                }
                 showView(null, 'dashboard-view');
             } else {
                 loginError.textContent = 'Invalid email or password.';
@@ -438,12 +462,188 @@
                 document.getElementById('app-container').classList.remove('hidden');
                 document.getElementById('user-name').textContent = user.name;
                 document.getElementById('user-avatar').src = user.avatar;
+                if(user.role === 'Admin') {
+                    document.getElementById('user-management-nav').classList.remove('hidden');
+                }
                 showView(null, 'dashboard-view');
             } else {
                  document.getElementById('login-container').classList.remove('hidden');
                  document.getElementById('app-container').classList.add('hidden');
             }
         };
+
+        // Expose functions to the global scope
+        window.handleLogin = handleLogin;
+        window.handleLogout = handleLogout;
+        window.showView = showView;
+        window.toggleTheme = toggleTheme;
+        window.toggleNavbar = toggleNavbar;
+        window.openSettingsModal = openSettingsModal;
+        window.closeSettingsModal = closeSettingsModal;
+        window.switchSettingsTab = switchSettingsTab;
+        window.setDashboardFilter = setDashboardFilter;
+        window.openCreateTaskModal = openCreateTaskModal;
+        window.closeCreateTaskModal = closeCreateTaskModal;
+        window.handleCreateTask = handleCreateTask;
+        window.sortTable = sortTable;
+        window.setTaskViewMode = setTaskViewMode;
+        window.changeWeek = changeWeek;
+        window.addTimesheetEntry = addTimesheetEntry;
+        window.updateTimesheetEntry = updateTimesheetEntry;
+        window.removeTimesheetEntry = removeTimesheetEntry;
+        window.openTaskFromList = openTaskFromList;
+        window.renderUserManagement = renderUserManagement;
+        window.openUserModal = openUserModal;
+        window.closeUserModal = closeUserModal;
+        window.handleSaveUser = handleSaveUser;
+        window.renderProjectsPage = renderProjectsPage;
+        window.filterTasksByProject = filterTasksByProject;
+        window.handleFileChange = (event, taskId) => {
+            const file = event.target.files[0];
+            if (!file) return;
+            taskData[taskId].attachments.push({ name: file.name, size: file.size });
+            openTaskFromList(taskId); // Re-render the view
+        };
+
+        function renderUserManagement() {
+            const container = document.getElementById('users-view');
+            if (!container) return;
+
+            const userRows = Object.entries(userData).map(([email, user]) => `
+                <tr class="border-b border-[var(--border-primary)]">
+                    <td class="p-4"><div class="flex items-center gap-3"><img src="${user.avatar}" class="w-10 h-10 rounded-full"><span>${user.name}</span></div></td>
+                    <td class="p-4 text-[var(--text-secondary)]">${email}</td>
+                    <td class="p-4 text-[var(--text-secondary)]">${user.role}</td>
+                    <td class="p-4 text-right"><button class="text-indigo-600 hover:underline" onclick="openUserModal('${email}')">Edit</button></td>
+                </tr>
+            `).join('');
+
+            container.innerHTML = `
+                <div class="flex items-center justify-between mb-6">
+                    <h1 class="text-3xl font-bold text-[var(--text-primary)]">User Management</h1>
+                    <button onclick="openUserModal()" class="px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg text-sm font-medium flex items-center gap-2">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+                        Add User
+                    </button>
+                </div>
+                <div class="bg-[var(--bg-primary)] rounded-lg shadow-sm border border-[var(--border-primary)] overflow-x-auto">
+                    <table class="w-full text-left">
+                        <thead>
+                            <tr class="border-b border-[var(--border-primary)]">
+                                <th class="p-4 font-semibold text-sm text-[var(--text-muted)]">Name</th>
+                                <th class="p-4 font-semibold text-sm text-[var(--text-muted)]">Email</th>
+                                <th class="p-4 font-semibold text-sm text-[var(--text-muted)]">Role</th>
+                                <th class="p-4"></th>
+                            </tr>
+                        </thead>
+                        <tbody>${userRows}</tbody>
+                    </table>
+                </div>
+            `;
+        }
+        
+        function openUserModal(email = null) {
+            const modalsContainer = document.getElementById('modals-container');
+            if (!modalsContainer) return;
+            
+            const user = email ? userData[email] : null;
+            const title = user ? 'Edit User' : 'Add New User';
+
+            modalsContainer.innerHTML = `
+                <div id="user-modal" class="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center">
+                    <div class="bg-[var(--bg-primary)] rounded-lg shadow-xl w-full max-w-lg">
+                        <div class="flex justify-between items-center p-6 border-b border-[var(--border-primary)]">
+                            <h2 class="text-2xl font-bold text-[var(--text-primary)]">${title}</h2>
+                            <button onclick="closeUserModal()" class="text-[var(--text-muted)] hover:text-[var(--text-primary)] text-3xl">&times;</button>
+                        </div>
+                        <form id="user-form" class="p-6 space-y-4">
+                            <input type="hidden" name="originalEmail" value="${email || ''}">
+                            <div><label class="block text-sm font-medium">Name</label><input type="text" name="name" value="${user?.name || ''}" required class="mt-1 block w-full rounded-md border-[var(--border-primary)] shadow-sm bg-[var(--bg-secondary)] p-2"></div>
+                            <div><label class="block text-sm font-medium">Email</label><input type="email" name="email" value="${user?.email || ''}" required class="mt-1 block w-full rounded-md border-[var(--border-primary)] shadow-sm bg-[var(--bg-secondary)] p-2"></div>
+                            <div><label class="block text-sm font-medium">Role</label><select name="role" class="mt-1 block w-full rounded-md border-[var(--border-primary)] shadow-sm bg-[var(--bg-secondary)] p-2"><option ${user?.role === 'Member' ? 'selected' : ''}>Member</option><option ${user?.role === 'Admin' ? 'selected' : ''}>Admin</option></select></div>
+                            ${!user ? '<div><label class="block text-sm font-medium">Password</label><input type="password" name="password" required class="mt-1 block w-full rounded-md border-[var(--border-primary)] shadow-sm bg-[var(--bg-secondary)] p-2"></div>' : ''}
+                        </form>
+                        <div class="p-4 bg-[var(--bg-secondary)] border-t border-[var(--border-primary)] flex justify-end gap-2">
+                             <button type="button" onclick="closeUserModal()" class="px-4 py-2 text-sm font-medium rounded-md border border-[var(--border-primary)]">Cancel</button>
+                             <button type="button" onclick="handleSaveUser()" class="px-4 py-2 text-sm font-medium rounded-md bg-indigo-600 text-white">Save Changes</button>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        function closeUserModal() {
+            const modal = document.getElementById('user-modal');
+            if (modal) modal.remove();
+        }
+
+        function handleSaveUser() {
+            const form = document.getElementById('user-form');
+            const originalEmail = form.originalEmail.value;
+            const newEmail = form.email.value;
+            
+            const newUserData = {
+                id: originalEmail ? userData[originalEmail].id : newEmail.substring(0,2).toUpperCase(), // simple id generation
+                name: form.name.value,
+                avatar: `https://placehold.co/40x40/cccccc/333333?text=${form.name.value.substring(0,2).toUpperCase()}`,
+                role: form.role.value,
+                password: form.password ? form.password.value : (originalEmail ? userData[originalEmail].password : 'password123')
+            };
+
+            if (originalEmail && originalEmail !== newEmail) {
+                delete userData[originalEmail];
+            }
+            userData[newEmail] = newUserData;
+
+            closeUserModal();
+            renderUserManagement();
+        }
+        
+        function renderProjectsPage() {
+            const container = document.getElementById('projects-view');
+            if(!container) return;
+            
+            const projectCards = Object.entries(projectData).map(([id, project]) => {
+                 const tasksInProject = Object.values(taskData).filter(t => t.projectId === id).length;
+                 return `
+                    <div class="bg-[var(--bg-primary)] p-6 rounded-lg shadow-sm border border-[var(--border-primary)] cursor-pointer hover:shadow-lg transition-shadow" onclick="filterTasksByProject('${id}')">
+                        <div class="flex justify-between items-start">
+                             <h3 class="text-xl font-bold text-[var(--text-primary)]">${project.name}</h3>
+                             <span class="text-sm font-semibold px-2 py-0.5 ${project.color} rounded-full">${id}</span>
+                        </div>
+                        <p class="text-[var(--text-secondary)] mt-2 mb-4 h-10">${project.description}</p>
+                        <div class="text-sm text-[var(--text-muted)]">${tasksInProject} tasks</div>
+                    </div>
+                 `
+            }).join('');
+            
+            container.innerHTML = `
+                <div class="flex items-center justify-between mb-6">
+                    <h1 class="text-3xl font-bold text-[var(--text-primary)]">Projects</h1>
+                    <button class="px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg text-sm font-medium flex items-center gap-2">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+                        Add Project
+                    </button>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    ${projectCards}
+                </div>
+            `;
+        }
+
+        function filterTasksByProject(projectId) {
+            currentProjectFilter = projectId;
+            showView(null, 'tasks-view');
+            const showAllBtn = document.getElementById('show-all-tasks-btn');
+            if(showAllBtn) {
+                if(projectId) {
+                    showAllBtn.classList.remove('hidden');
+                } else {
+                    showAllBtn.classList.add('hidden');
+                }
+            }
+        }
+    })(); // End of IIFE
     </script>
 </body>
 </html>
