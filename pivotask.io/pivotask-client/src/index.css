@@ -1,0 +1,92 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+/* @tailwind base;
+@tailwind components;
+@tailwind utilities; */
+@import 'tailwindcss/base';
+@import 'tailwindcss/components';
+@import 'tailwindcss/utilities';
+
+:root {
+    --bg-primary: #ffffff;
+    --bg-secondary: #f8fafc; /* slate-50 */
+    --bg-tertiary: #f1f5f9; /* slate-100 */
+    --bg-nav: #1e293b; /* slate-800 */
+    --bg-nav-hover: #334155; /* slate-700 */
+    --bg-active-nav: #4f46e5; /* indigo-600 */
+    
+    --text-primary: #1e293b; /* slate-800 */
+    --text-secondary: #475569; /* slate-600 */
+    --text-muted: #64748b; /* slate-500 */
+    --text-inverted: #f8fafc; /* slate-50 */
+    --text-nav: #cbd5e1; /* slate-300 */
+
+    --border-primary: #e2e8f0; /* slate-200 */
+    --border-nav: #334155; /* slate-700 */
+
+    --scrollbar-thumb: #94a3b8;
+    --scrollbar-track: #f1f5f9;
+}
+
+[data-theme="dark"] {
+    --bg-primary: #1e293b; /* slate-800 */
+    --bg-secondary: #334155; /* slate-700 */
+    --bg-tertiary: #0f172a; /* slate-900 */
+    --bg-nav: #0f172a; /* slate-900 */
+    --bg-nav-hover: #1e293b; /* slate-800 */
+
+    --text-primary: #e2e8f0; /* slate-200 */
+    --text-secondary: #94a3b8; /* slate-400 */
+    --text-muted: #64748b; /* slate-500 */
+    --text-inverted: #1e293b; /* slate-800 */
+    --text-nav: #94a3b8; /* slate-400 */
+
+    --border-primary: #334155; /* slate-700 */
+    --border-nav: #1e293b; /* slate-800 */
+
+    --scrollbar-thumb: #475569;
+    --scrollbar-track: #1e293b;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    background-color: var(--bg-tertiary);
+    color: var(--text-primary);
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.kanban-column .sortable-ghost {
+    background-color: #eef2ff;
+    border-radius: 0.5rem;
+}
+
+/* Org Chart Styles */
+.org-chart ul {
+    position: relative;
+    padding-left: 30px;
+    list-style: none;
+}
+.org-chart li {
+    position: relative;
+    padding-top: 10px;
+}
+.org-chart li::before, .org-chart li::after {
+    content: '';
+    position: absolute;
+    left: -15px;
+}
+.org-chart li::before {
+    border-top: 2px solid var(--border-primary);
+    width: 15px;
+    top: 35px;
+    height: 0;
+}
+.org-chart li::after {
+    border-left: 2px solid var(--border-primary);
+    height: 100%;
+    width: 0px;
+    top: 0;
+}
+.org-chart ul > li:last-child::after {
+    height: 35px;
+}

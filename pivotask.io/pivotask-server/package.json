@@ -1,0 +1,22 @@
+{
+  "name": "pivotask-server",
+  "version": "1.0.0",
+  "description": "Backend for Pivotask project management app.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "module",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^5.1.0",
+    "form-data": "^4.0.3",
+    "module_name": "^1.0.0"
+  },
+  "devDependencies": {
+    "@types/node": "^24.0.8"
+  }
+}
