@@ -7,35 +7,37 @@ This is a full-stack project management application built with the MERN stack (t
 
 ### Backend Server
 
-1.  Navigate to the `server` directory:
-    ```bash
-    cd server
-    ```
-2.  Install dependencies:
-    ```bash
-    npm install
-    ```
-3.  Start the development server:
-    ```bash
-    npm run dev
-    ```
-    The server will be running on `http://localhost:3001`.
+1. Navigate to the `server` directory:
+   ```bash
+   cd server
+   ```
+2. Install dependencies:
+   ```bash
+   npm install
+   ```
+3. Start the development server:
+   ```bash
+   npm run dev
+   ```
+
+   The server will be running on `http://localhost:3001`.
 
 ### Frontend Client
 
-1.  Navigate to the `client` directory:
-    ```bash
-    cd client
-    ```
-2.  Install dependencies:
-    ```bash
-    npm install
-    ```
-3.  Start the development server:
-    ```bash
-    npm run dev
-    ```
-    The React application will be available at `http://localhost:5173` (or another port if 5173 is busy).
+1. Navigate to the `client` directory:
+   ```bash
+   cd client
+   ```
+2. Install dependencies:
+   ```bash
+   npm install
+   ```
+3. Start the development server:
+   ```bash
+   npm run dev
+   ```
+
+   The React application will be available at `http://localhost:5173` (or another port if 5173 is busy).
 
 ## API Endpoints
 
@@ -53,100 +55,59 @@ The backend provides the following RESTful API endpoints:
 
 ## Project Structure
 
-
-├── client/                # Vite + React + TypeScript frontend
-
-│
+├── client/                # Vite + React + JavaScript frontend
 │   ├── src/
-
 │   │   ├── App.jsx
-
 │   │   ├── main.jsx
-
 │   │   ├── index.css
-
 │   │   ├── api/           # API call helpers
-
 │   │   │   └── api.js
-
 │   │   ├── components/    # Shared UI components
-
 │   │   │   ├── Sidebar.jsx
-
 │   │   │   ├── Navbar.jsx
-
 │   │   │   ├── UserMenu.jsx
-
 │   │   │   ├── NotificationPanel.jsx
-
 │   │   │   ├── ChatWidget.jsx
-
 │   │   │   ├── Modal.jsx
-
-│   │   │   └── ... (other shared components)
-
+│   │   │   ├── TaskCard.jsx: Task summary for Kanban/list.
+│   │   │   ├── ProjectCard.jsx: Project summary.
+│   │   │   ├── TicketCard.jsx: Service ticket summary.
+│   │   │   ├── TimesheetEntry.jsx: Timesheet row.
+│   │   │   ├── OrgChartNode.jsx: Recursive org chart node.
+│   │   │   └── ...(other shared components)
 │   │   ├── pages/         # Main pages/views
-
 │   │   │   ├── LoginPage.jsx
-
 │   │   │   ├── DashboardPage.jsx
-
 │   │   │   ├── TasksPage.jsx
-
 │   │   │   ├── TaskDetailPage.jsx
-
 │   │   │   ├── ProjectsPage.jsx
-
 │   │   │   ├── ServiceTicketsPage.jsx
-
 │   │   │   ├── ServiceTicketDetailPage.jsx
-
 │   │   │   ├── TimesheetPage.jsx
-
 │   │   │   ├── UsersPage.jsx
-
 │   │   │   ├── CalendarPage.jsx
-
 │   │   │   └── OrgChartPage.jsx
-
-│   │   └── types/         # Shared TypeScript types
-
+│   │   └── types/         # Shared JavaScript types
 │   │       └── models.js
-
 │   ├── public/
-
 │   │   └── index.html
-
 │   ├── package.json
-
 │   └── vite.config.js
-
-├── backend/               # Node.js + TypeScript backend
-
+├── server/               # Node.js + JavaScript backend
 │   ├── src/
-
 │   │   ├── index.js
-
 │   │   ├── routes/
-
 │   │   │   ├── auth.js
-
 │   │   │   ├── tasks.js
-
 │   │   │   ├── users.js
-
 │   │   │   ├── projects.js
-
 │   │   │   ├── tickets.js
-
+│   │   │   ├── timesheet.js
+│   │   │   ├── notifications.js
 │   │   │   └── ... (other modules)
-
+│   │   ├── data.js
 │   │   └── models/
-
 │   │       └── models.js
-
 │   ├── package.json
-
 │   └── tsconfig.json
-
 └── README.md
