@@ -80,6 +80,10 @@ app.post('/api/tasks/:id/comments', (req, res) => {
 // --- SERVICE TICKETS ---
 app.get('/api/service-tickets', (req, res) => res.json(Object.values(serviceTicketData)));
 app.get('/api/service-tickets/:id', (req, res) => res.json(serviceTicketData[req.params.id]));
+// --- TICKETS (alias for service-tickets) ---
+app.get('/api/tickets', (req, res) => res.json(Object.values(serviceTicketData)));
+app.get('/api/tickets/:id', (req, res) => res.json(serviceTicketData[req.params.id]));
+
 app.put('/api/service-tickets/:id', (req, res) => {
     const { id } = req.params;
     const updatedTicket = req.body;
@@ -94,6 +98,13 @@ app.put('/api/service-tickets/:id', (req, res) => {
 
 // --- TIMESHEETS ---
 app.get('/api/timesheets', (req, res) => res.json(timesheetData));
+// --- TIMESHEET (singular, for compatibility) ---
+app.get('/api/timesheet', (req, res) => res.json(timesheetData));
+app.put('/api/timesheet', (req, res) => {
+    const newTimesheetData = req.body;
+    timesheetData = newTimesheetData;
+    res.json(timesheetData);
+});
 app.put('/api/timesheets', (req, res) => {
     const newTimesheetData = req.body;
     timesheetData = newTimesheetData;

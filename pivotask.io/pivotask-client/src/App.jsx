@@ -1,5 +1,6 @@
 import { Routes, Route, Navigate } from 'react-router-dom';
 import { useAuth } from './context/AuthContext';
+import { AppProvider } from './context/AppContext';
 import Layout from './components/Layout';
 import Login from './pages/LoginPage';
 import Dashboard from './pages/DashboardPage';
@@ -23,6 +24,7 @@ function App() {
         path="/*"
         element={
           user ? (
+            <AppProvider>
             <Layout>
               <Routes>
                 <Route path="/dashboard" element={<Dashboard />} />
@@ -37,6 +39,7 @@ function App() {
                 <Route path="*" element={<Navigate to="/dashboard" />} />
               </Routes>
             </Layout>
+            </AppProvider>
           ) : (
             <Navigate to="/login" />
           )

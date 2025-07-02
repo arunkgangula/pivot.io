@@ -1,65 +1,117 @@
-"# pivot.io"
+# Pivotask.io - Project Management Tool
+
+This is a full-stack project management application built with the MERN stack (though using in-memory data instead of MongoDB for this version). The frontend is a React application built with Vite, and the backend is a Node.js API using Express.
 
 
-pivotask.io/
+## How to Run
+
+### Backend Server
+
+1.  Navigate to the `server` directory:
+    ```bash
+    cd server
+    ```
+2.  Install dependencies:
+    ```bash
+    npm install
+    ```
+3.  Start the development server:
+    ```bash
+    npm run dev
+    ```
+    The server will be running on `http://localhost:3001`.
+
+### Frontend Client
+
+1.  Navigate to the `client` directory:
+    ```bash
+    cd client
+    ```
+2.  Install dependencies:
+    ```bash
+    npm install
+    ```
+3.  Start the development server:
+    ```bash
+    npm run dev
+    ```
+    The React application will be available at `http://localhost:5173` (or another port if 5173 is busy).
+
+## API Endpoints
+
+The backend provides the following RESTful API endpoints:
+
+* `/api/login` (POST): Authenticate user.
+* `/api/users` (GET): User management.
+* `/api/tasks` (GET/POST/PUT): Task CRUD.
+* `/api/projects` (GET): Project data.
+* `/api/tickets` (GET/PUT): Service ticket CRUD and approval.
+* `/api/timesheet` (GET/PUT): Timesheet CRUD.
+* `/api/notifications` (GET/POST): Notifications.
+* `/api/chat` (GET/POST): Chat messages.
+* `/api/org-chart` (GET): Organizational chart data.
+
+## Project Structure
+
 
 ├── client/                # Vite + React + TypeScript frontend
 
+│
 │   ├── src/
 
-│   │   ├── App.tsx
+│   │   ├── App.jsx
 
-│   │   ├── main.tsx
+│   │   ├── main.jsx
 
 │   │   ├── index.css
 
 │   │   ├── api/           # API call helpers
 
-│   │   │   └── api.ts
+│   │   │   └── api.js
 
 │   │   ├── components/    # Shared UI components
 
-│   │   │   ├── Sidebar.tsx
+│   │   │   ├── Sidebar.jsx
 
-│   │   │   ├── Navbar.tsx
+│   │   │   ├── Navbar.jsx
 
-│   │   │   ├── UserMenu.tsx
+│   │   │   ├── UserMenu.jsx
 
-│   │   │   ├── NotificationPanel.tsx
+│   │   │   ├── NotificationPanel.jsx
 
-│   │   │   ├── ChatWidget.tsx
+│   │   │   ├── ChatWidget.jsx
 
-│   │   │   ├── Modal.tsx
+│   │   │   ├── Modal.jsx
 
 │   │   │   └── ... (other shared components)
 
 │   │   ├── pages/         # Main pages/views
 
-│   │   │   ├── LoginPage.tsx
+│   │   │   ├── LoginPage.jsx
 
-│   │   │   ├── DashboardPage.tsx
+│   │   │   ├── DashboardPage.jsx
 
-│   │   │   ├── TasksPage.tsx
+│   │   │   ├── TasksPage.jsx
 
-│   │   │   ├── TaskDetailPage.tsx
+│   │   │   ├── TaskDetailPage.jsx
 
-│   │   │   ├── ProjectsPage.tsx
+│   │   │   ├── ProjectsPage.jsx
 
-│   │   │   ├── ServiceTicketsPage.tsx
+│   │   │   ├── ServiceTicketsPage.jsx
 
-│   │   │   ├── ServiceTicketDetailPage.tsx
+│   │   │   ├── ServiceTicketDetailPage.jsx
 
-│   │   │   ├── TimesheetPage.tsx
+│   │   │   ├── TimesheetPage.jsx
 
-│   │   │   ├── UsersPage.tsx
+│   │   │   ├── UsersPage.jsx
 
-│   │   │   ├── CalendarPage.tsx
+│   │   │   ├── CalendarPage.jsx
 
-│   │   │   └── OrgChartPage.tsx
+│   │   │   └── OrgChartPage.jsx
 
 │   │   └── types/         # Shared TypeScript types
 
-│   │       └── models.ts
+│   │       └── models.js
 
 │   ├── public/
 
@@ -67,31 +119,31 @@ pivotask.io/
 
 │   ├── package.json
 
-│   └── vite.config.ts
+│   └── vite.config.js
 
 ├── backend/               # Node.js + TypeScript backend
 
 │   ├── src/
 
-│   │   ├── index.ts
+│   │   ├── index.js
 
 │   │   ├── routes/
 
-│   │   │   ├── auth.ts
+│   │   │   ├── auth.js
 
-│   │   │   ├── tasks.ts
+│   │   │   ├── tasks.js
 
-│   │   │   ├── users.ts
+│   │   │   ├── users.js
 
-│   │   │   ├── projects.ts
+│   │   │   ├── projects.js
 
-│   │   │   ├── tickets.ts
+│   │   │   ├── tickets.js
 
 │   │   │   └── ... (other modules)
 
 │   │   └── models/
 
-│   │       └── models.ts
+│   │       └── models.js
 
 │   ├── package.json
 
